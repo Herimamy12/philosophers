@@ -14,13 +14,23 @@
 # define PHILOSOPHERS_H
 
 # include <stdio.h>
+# include <pthread.h>
 
 # include "./function/function_util.h"
 # include "./error/check_argument.h"
 
-// typedef struct s_data
-// {
-// 	ok
-// }		t_data;
+typedef struct s_param_data
+{
+	int	philo_nbr;
+	int	time_to_die;
+	int	time_to_eat;
+	int	time_to_sleep;
+	int	nbr_of_time_must_eat;
+}		t_param_data;
+
+typedef struct s_data
+{
+	t_param_data	*param_data;
+}					t_data;
 
 #endif
