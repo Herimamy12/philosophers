@@ -6,7 +6,9 @@ SRC = main.c \
 \
 		./function/function_util.c \
 \
-		./error/check_argument.c
+		./error/check_argument.c \
+\
+		./philo_function/philosophers_zero.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -34,5 +36,13 @@ fclean : clean
 		rm -rf $(NAME)
 
 re : fclean all
+
+test : re
+	clear
+	./$(NAME) 5 6 9 8 7
+
+val : re
+	clear
+	valgrind -s --leak-check=full ./$(NAME) 5 6 9 8 7
 
 .PHONY : all clean fclean re
