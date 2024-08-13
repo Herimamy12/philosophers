@@ -24,19 +24,25 @@ typedef struct s_param
 	int	nbr_of_time_must_eat;
 }		t_param;
 
+typedef struct s_fork
+{
+	pthread_mutex_t *fork;
+}					t_fork;
+
 typedef struct s_philo
 {
 	int				id;
 	pthread_t		*thread;
-	t_param			*param;
-	pthread_mutex_t	*l_fork;
-	pthread_mutex_t	*r_fork;
+	struct s_data	*data;
+	t_fork			*l_fork;
+	t_fork			*r_fork;
 }					t_philo;
 
 typedef struct s_data
 {
 	t_param	*param;
 	t_philo	*philo;
+	t_fork	*fork;
 }			t_data;
 
 //	PARAM
@@ -50,9 +56,13 @@ void	print_data(t_data *data);
 void	destroy_data(t_data *data);
 
 // PHILO
-t_philo	*new_philo(t_param *param);
+t_philo	*new_philo(t_data *data);
 void	print_philo(t_philo *philo);
 void	destroy_philo(t_philo *philo);
+
+// FORK
+t_fork	*new_fork(t_param *param);
+void	destroy_fork(t_fork *fork, int lim);
 
 // ROUTINE
 void	run_routine(t_data *data);

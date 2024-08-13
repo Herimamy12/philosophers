@@ -48,28 +48,58 @@ t_param	*new_param(int ac, char **av)
 	return (param);
 }
 
-t_philo	*new_philo(t_param *param)
+t_philo	*new_philo(t_data *data)
 {
 	int		i;
+	int		lim;
 	t_philo	*philo;
 
 	i = 0;
-	philo = (t_philo *)malloc(sizeof(t_philo) * param->philo_nbr);
+	philo = (t_philo *)malloc(sizeof(t_philo) * data->param->philo_nbr);
 	if (!philo)
 		return (NULL);
-	while (i < param->philo_nbr)
+	lim = data->param->philo_nbr;
+	while (i < lim)
 	{
 		philo[i].id = i + 1;
-		philo[i].param = param;
+		philo[i].data = data;
 		philo[i].thread = (pthread_t *)malloc(sizeof(pthread_t));
+		if (!philo[i].thread)
+		{
+			destroy_philo (philo);
+			return (NULL);
+		}
 		i++;
 	}
 	return (philo);
 }
 
+t_fork	*new_fork(t_param *param)
+{
+	int		i;
+	t_fork	*fork;
+
+	i = 0;
+	fork = (t_fork *)malloc(sizeof(t_fork) * param->philo_nbr);
+	if (!fork)
+		return (NULL);
+	while (i < param->philo_nbr)
+	{
+		fork[i].fork = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
+		if (!fork[i].fork)
+		{
+			destroy_fork (fork, param->philo_nbr);
+			return (NULL);
+		}
+		i++;
+	}
+	return (fork);
+}
+
 t_data	*new_data(int ac, char **av)
 {
 	t_data	*data;
+	t_fork	*fork;
 	t_philo	*philo;
 	t_param	*param;
 
@@ -82,16 +112,10 @@ t_data	*new_data(int ac, char **av)
 		free (data);
 		return (NULL);
 	}
-	philo = new_philo (param);
 	data->param = param;
+	fork = new_fork (param);
+	data->fork = fork;
+	philo = new_philo (data);
 	data->philo = philo;
 	return (data);
-}
-
-void	print_data(t_data *data)
-{
-	if (!data)
-		return ;
-	print_param (data->param);
-	print_philo (data->philo);
 }

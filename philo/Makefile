@@ -10,7 +10,8 @@ SRC = main.c \
 \
 		./philo_function/philosophers_zero.c \
 		./philo_function/philosophers_one.c \
-		./philo_function/philosophers_two.c
+		./philo_function/philosophers_two.c \
+		./philo_function/all_print.c
 
 OBJ = $(SRC:.c=.o)
 
