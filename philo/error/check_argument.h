@@ -15,6 +15,9 @@
 
 # include "../philosophers.h"
 
+int	number_param_err(int ac);
+int	not_nbr_detected(char *str);
+int	param_not_nbr(int ac, char **av);
 int	check_arg(int ac, char **av);
 
 #endif

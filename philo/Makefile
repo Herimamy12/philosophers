@@ -8,11 +8,13 @@ SRC = main.c \
 \
 		./error/check_argument.c \
 \
-		./philo_function/philosophers_zero.c
+		./philo_function/philosophers_zero.c \
+		./philo_function/philosophers_one.c \
+		./philo_function/philosophers_two.c
 
 OBJ = $(SRC:.c=.o)
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 
 PFLAGS = -pthread
 
@@ -36,6 +38,7 @@ fclean : clean
 		rm -rf $(NAME)
 
 re : fclean all
+	clear
 
 test : re
 	clear

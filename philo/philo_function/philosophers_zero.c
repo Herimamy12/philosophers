@@ -18,10 +18,11 @@ int	false_param(t_param *param)
 
 	ret = 0;
 	if (!param->philo_nbr || !param->time_to_die || !param->time_to_eat)
-	{
-		printf("false parameter detected\n");
 		ret = 1;
-	}
+	if (!param->time_to_sleep || !param->nbr_of_time_must_eat)
+		ret = 1;
+	if (ret)
+		printf("Parameter 00 detected\n");
 	return (ret);
 }
 
@@ -41,43 +42,56 @@ t_param	*new_param(int ac, char **av)
 		param->nbr_of_time_must_eat = ft_atoi (av[5]);
 	if (false_param (param))
 	{
-		free (param);
+		destroy_param (param);
 		return (NULL);
 	}
 	return (param);
 }
 
+t_philo	*new_philo(t_param *param)
+{
+	int		i;
+	t_philo	*philo;
+
+	i = 0;
+	philo = (t_philo *)malloc(sizeof(t_philo) * param->philo_nbr);
+	if (!philo)
+		return (NULL);
+	while (i < param->philo_nbr)
+	{
+		philo[i].id = i + 1;
+		philo[i].param = param;
+		philo[i].thread = (pthread_t *)malloc(sizeof(pthread_t));
+		i++;
+	}
+	return (philo);
+}
+
 t_data	*new_data(int ac, char **av)
 {
 	t_data	*data;
+	t_philo	*philo;
 	t_param	*param;
 
 	param = new_param (ac, av);
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
 		return (NULL);
-	if (!param /*|| !philo*/)
+	if (!param)
 	{
 		free (data);
 		return (NULL);
 	}
+	philo = new_philo (param);
 	data->param = param;
+	data->philo = philo;
 	return (data);
 }
 
-void	print_param (t_param *param)
+void	print_data(t_data *data)
 {
-	printf("=\t==\t==\t==\t==\t=\n");
-	printf("nbr philo = %d\n", param->philo_nbr);
-	printf("time to die = %d\n", param->time_to_die);
-	printf("time to eat = %d\n", param->time_to_eat);
-	printf("time to sleep = %d\n", param->time_to_sleep);
-	printf("nbr of time must eat = %d\n", param->nbr_of_time_must_eat);
-	printf("=\t==\t==\t==\t==\t=\n");
-}
-
-void	destroy_data(t_data *data)
-{
-	free (data->param);
-	free (data);
+	if (!data)
+		return ;
+	print_param (data->param);
+	print_philo (data->philo);
 }

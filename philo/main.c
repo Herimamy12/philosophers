@@ -22,9 +22,11 @@ int	main(int ac, char **av)
 	if (!data)
 	{
 		printf("Error data init\n");
+		destroy_data (data);
 		return (1);
 	}
-	print_param (data->param);
+	// print_data (data);
+	run_routine (data);
 	destroy_data (data);
 	return (0);
 }
