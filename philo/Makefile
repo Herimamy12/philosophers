@@ -11,6 +11,7 @@ SRC = main.c \
 		./philo_function/philosophers_zero.c \
 		./philo_function/philosophers_one.c \
 		./philo_function/philosophers_two.c \
+		./philo_function/philosophers_three.c \
 		./philo_function/all_print.c
 
 OBJ = $(SRC:.c=.o)
@@ -47,6 +48,9 @@ test : re
 
 val : re
 	clear
-	valgrind -s --leak-check=full ./$(NAME) 5 6 9 8 7
+	valgrind -s --tool=helgrind ./$(NAME) 5 6 9 8 7
 
 .PHONY : all clean fclean re
+
+
+#--leak-check=full 

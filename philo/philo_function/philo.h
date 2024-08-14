@@ -26,7 +26,7 @@ typedef struct s_param
 
 typedef struct s_fork
 {
-	pthread_mutex_t *fork;
+	pthread_mutex_t	*fork;
 }					t_fork;
 
 typedef struct s_philo
@@ -34,16 +34,21 @@ typedef struct s_philo
 	int				id;
 	pthread_t		*thread;
 	struct s_data	*data;
-	t_fork			*l_fork;
-	t_fork			*r_fork;
+	t_fork			l_fork;
+	t_fork			r_fork;
+	long long		last_eat;
 }					t_philo;
 
 typedef struct s_data
 {
-	t_param	*param;
-	t_philo	*philo;
-	t_fork	*fork;
-}			t_data;
+	long long	start_time;
+	t_fork		*fork;
+	t_param		*param;
+	t_philo		*philo;
+}				t_data;
+
+// TIME
+int		get_time(void);
 
 //	PARAM
 t_param	*new_param(int ac, char **av);
@@ -66,5 +71,12 @@ void	destroy_fork(t_fork *fork, int lim);
 
 // ROUTINE
 void	run_routine(t_data *data);
+// 
+void	take_a_fork(t_philo *ph);
+void	is_eating(t_philo *ph);
+void	is_sleeping(t_philo *ph);
+void	is_thinking(t_philo *ph);
+int		is_dead(t_philo *ph);
+void	print_action(char *action, t_philo *ph);
 
 #endif

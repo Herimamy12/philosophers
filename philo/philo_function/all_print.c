@@ -45,6 +45,7 @@ void	print_data(t_data *data)
 {
 	if (!data)
 		return ;
+	printf("start time = %lld\n", data->start_time);
 	print_param (data->param);
 	print_philo (data->philo);
 }

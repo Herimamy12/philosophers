@@ -17,12 +17,14 @@ int	false_param(t_param *param)
 	int	ret;
 
 	ret = 0;
-	if (!param->philo_nbr || !param->time_to_die || !param->time_to_eat)
+	if (!param->time_to_die || !param->time_to_eat)
 		ret = 1;
 	if (!param->time_to_sleep || !param->nbr_of_time_must_eat)
 		ret = 1;
+	if (!param->philo_nbr || param->philo_nbr > 200)
+		ret = 1;
 	if (ret)
-		printf("Parameter 00 detected\n");
+		printf("Value of parameter 0 or philo more than 200\n");
 	return (ret);
 }
 
@@ -63,12 +65,19 @@ t_philo	*new_philo(t_data *data)
 	{
 		philo[i].id = i + 1;
 		philo[i].data = data;
+		philo[i].last_eat = 1;
 		philo[i].thread = (pthread_t *)malloc(sizeof(pthread_t));
 		if (!philo[i].thread)
 		{
+			printf("Error philo alloc\n");
 			destroy_philo (philo);
 			return (NULL);
 		}
+		philo[i].l_fork.fork = data->fork[i].fork;
+		if (i < lim - 1)
+			philo[i].r_fork.fork = data->fork[i + 1].fork;
+		else
+			philo[i].r_fork.fork = data->fork[0].fork;
 		i++;
 	}
 	return (philo);
@@ -88,6 +97,13 @@ t_fork	*new_fork(t_param *param)
 		fork[i].fork = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
 		if (!fork[i].fork)
 		{
+			printf("Error fork alloc\n");
+			destroy_fork (fork, param->philo_nbr);
+			return (NULL);
+		}
+		if (pthread_mutex_init (fork[i].fork, NULL))
+		{
+			printf("Error fork init\n");
 			destroy_fork (fork, param->philo_nbr);
 			return (NULL);
 		}
@@ -107,6 +123,7 @@ t_data	*new_data(int ac, char **av)
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
 		return (NULL);
+	data->start_time = get_time ();
 	if (!param)
 	{
 		free (data);

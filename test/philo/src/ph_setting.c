@@ -3,23 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ph_setting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nrabehar <nrabehar@student.42antananari    +#+  +:+       +#+        */
+/*   By: nherimam <nherimam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 13:05:36 by nrabehar          #+#    #+#             */
-/*   Updated: 2024/07/17 16:29:59 by nrabehar         ###   ########.fr       */
+/*   Updated: 2024/08/14 13:15:23 by nherimam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-/**
- * @brief Check arguments
- *  - arguments count should be only 5 or 6(optional musav[T_EAT] number)
- *  - all arguments does only contains a positive number and great that 0
- * @param ac arguments count
- * @param av arguments value
- * @return 0 if all arguments is valid else -1 on error
- */
 int	validate_args(int ac, char **av)
 {
 	int	i;

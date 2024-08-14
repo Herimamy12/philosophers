@@ -18,6 +18,7 @@
 # include <pthread.h>
 # include <string.h>
 # include <unistd.h>
+# include <sys/time.h>
 
 # include "./function/function_util.h"
 # include "./error/check_argument.h"

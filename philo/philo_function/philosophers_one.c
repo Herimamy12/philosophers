@@ -12,6 +12,15 @@
 
 #include "philo.h"
 
+int	get_time(void)
+{
+	struct timeval	time;
+
+	if (gettimeofday (&time, NULL) == -1)
+		printf("gettimeofday() error\n");
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+}
+
 void	destroy_param(t_param *param)
 {
 	if (param)
