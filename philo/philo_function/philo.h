@@ -21,6 +21,7 @@ typedef struct s_param
 	int	time_to_die;
 	int	time_to_eat;
 	int	time_to_sleep;
+	int	time_to_think;
 	int	nbr_of_time_must_eat;
 }		t_param;
 
@@ -32,6 +33,7 @@ typedef struct s_fork
 typedef struct s_philo
 {
 	int				id;
+	int				nbr_eat;
 	pthread_t		*thread;
 	struct s_data	*data;
 	t_fork			l_fork;
@@ -41,10 +43,12 @@ typedef struct s_philo
 
 typedef struct s_data
 {
+	int			dead;
 	long long	start_time;
 	t_fork		*fork;
 	t_param		*param;
 	t_philo		*philo;
+	pthread_mutex_t	stop;
 }				t_data;
 
 // TIME
@@ -76,7 +80,14 @@ void	take_a_fork(t_philo *ph);
 void	is_eating(t_philo *ph);
 void	is_sleeping(t_philo *ph);
 void	is_thinking(t_philo *ph);
-int		is_dead(t_philo *ph);
 void	print_action(char *action, t_philo *ph);
+
+// CONDITION
+int		is_full(t_philo *ph);
+int		is_dead(t_philo *ph);
+int		is_will_run(t_philo *ph);
+
+// SLEEP
+void	let_sleep (int sleep_time, t_data *data);
 
 #endif

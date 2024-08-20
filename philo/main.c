@@ -25,6 +25,7 @@ int	main(int ac, char **av)
 		destroy_data (data);
 		return (1);
 	}
+	// print_param (data->param);
 	run_routine (data);
 	destroy_data (data);
 	return (0);

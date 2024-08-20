@@ -22,14 +22,20 @@ void	*start_routine(void *philo)
 	t_philo	*ph;
 
 	ph = (t_philo *)philo;
+	if (ph->id % 2 != 0)
+		is_thinking (ph);
 	while (1)
 	{
-		take_a_fork (ph);
+		pthread_mutex_lock (&ph->data->stop);
+		if (!is_will_run (ph))
+		{
+			pthread_mutex_unlock (&ph->data->stop);
+			break ;
+		}
+		pthread_mutex_unlock (&ph->data->stop);
 		is_eating (ph);
 		is_sleeping (ph);
 		is_thinking (ph);
-		if (is_dead (ph))
-			break ;
 	}
 	pthread_exit("succes");
 }

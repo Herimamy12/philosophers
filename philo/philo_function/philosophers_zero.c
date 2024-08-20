@@ -47,6 +47,10 @@ t_param	*new_param(int ac, char **av)
 		destroy_param (param);
 		return (NULL);
 	}
+	param->time_to_think = ft_atoi (av[2]) - ft_atoi (av[3])
+		- ft_atoi (av[4]);
+	if (param->time_to_think < 0)
+		param->time_to_think = 0;
 	return (param);
 }
 
@@ -64,8 +68,9 @@ t_philo	*new_philo(t_data *data)
 	while (i < lim)
 	{
 		philo[i].id = i + 1;
+		philo[i].nbr_eat = 0;
 		philo[i].data = data;
-		philo[i].last_eat = 1;
+		philo[i].last_eat = data->start_time;
 		philo[i].thread = (pthread_t *)malloc(sizeof(pthread_t));
 		if (!philo[i].thread)
 		{
@@ -119,11 +124,12 @@ t_data	*new_data(int ac, char **av)
 	t_philo	*philo;
 	t_param	*param;
 
-	param = new_param (ac, av);
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
 		return (NULL);
+	data->dead = 0;
 	data->start_time = get_time ();
+	param = new_param (ac, av);
 	if (!param)
 	{
 		free (data);

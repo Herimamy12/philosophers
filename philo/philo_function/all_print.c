@@ -12,6 +12,11 @@
 
 #include "philo.h"
 
+void	print_action(char *action, t_philo *ph)
+{
+	printf("%lld %d %s\n", get_time () - ph->data->start_time, ph->id, action);
+}
+
 void	print_param(t_param *param)
 {
 	if (!param)
@@ -21,6 +26,7 @@ void	print_param(t_param *param)
 	printf("time to die = %d\n", param->time_to_die);
 	printf("time to eat = %d\n", param->time_to_eat);
 	printf("time to sleep = %d\n", param->time_to_sleep);
+	printf("time to think = %d\n", param->time_to_think);
 	printf("nbr of time must eat = %d\n", param->nbr_of_time_must_eat);
 	printf("=\t==\t==\t=\n");
 }
