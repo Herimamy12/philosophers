@@ -22,29 +22,46 @@ void	take_a_fork(t_philo *ph)
 	print_action ("has taken a fork", ph);
 }
 
+void	drop_fork(t_philo *ph)
+{
+	if (pthread_mutex_unlock (ph->r_fork.fork) != 0)
+		printf("drop left fork error\n");
+	if (pthread_mutex_unlock (ph->l_fork.fork) != 0)
+		printf("drop right fork error\n");
+}
+
 void	is_eating(t_philo *ph)
 {
 	take_a_fork (ph);
-	ph->last_eat = get_time ();
+	if (!is_will_run (ph))
+	{
+		drop_fork (ph);
+		return ;
+	}
 	print_action ("is eating", ph);
-	let_sleep (ph->data->param->time_to_eat, ph->data);
-	if (pthread_mutex_unlock (ph->l_fork.fork) != 0)
-		printf("left fork unlock error\n");
-	if (pthread_mutex_unlock (ph->r_fork.fork) != 0)
-		printf("right fork unlock error\n");
+	pthread_mutex_lock (&ph->data->stop);
+	ph->last_eat = get_time ();
 	ph->nbr_eat++;
+	pthread_mutex_unlock (&ph->data->stop);
+	let_sleep (ph->data->param->time_to_eat, ph->data);
+	drop_fork (ph);
 }
 
 void	is_sleeping(t_philo *ph)
 {
+	if (!is_will_run (ph))
+		return ;
 	print_action ("is sleeping", ph);
 	let_sleep (ph->data->param->time_to_sleep, ph->data);
 }
 
 void	is_thinking(t_philo *ph)
 {
+	if (!is_will_run (ph))
+		return ;
 	print_action ("is thinking", ph);
 	usleep (ph->data->param->time_to_think);
+	// let_sleep (ph->data->param->time_to_think, ph->data);
 }
 
 int	is_dead(t_philo *ph)

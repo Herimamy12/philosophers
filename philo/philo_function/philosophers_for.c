@@ -1,10 +1,9 @@
-
 #include "philo.h"
 
 int	is_full(t_philo *ph)
 {
-	if (ph->data->param->nbr_of_time_must_eat > 0 &&
-		ph->nbr_eat >= ph->data->param->nbr_of_time_must_eat)
+	if (ph->data->param->nbr_of_time_must_eat > 0
+		&& ph->nbr_eat >= ph->data->param->nbr_of_time_must_eat)
 		return (1);
 	return (0);
 }
@@ -18,7 +17,7 @@ int	is_will_run(t_philo *ph)
 	return (1);
 }
 
-void	let_sleep (int sleep_time, t_data *data)
+void	let_sleep(int sleep_time, t_data *data)
 {
 	int	time;
 

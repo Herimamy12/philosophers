@@ -43,13 +43,13 @@ typedef struct s_philo
 
 typedef struct s_data
 {
-	int			dead;
-	long long	start_time;
-	t_fork		*fork;
-	t_param		*param;
-	t_philo		*philo;
+	int				dead;
+	long long		start_time;
+	t_fork			*fork;
+	t_param			*param;
+	t_philo			*philo;
 	pthread_mutex_t	stop;
-}				t_data;
+}					t_data;
 
 // TIME
 int		get_time(void);
@@ -88,6 +88,6 @@ int		is_dead(t_philo *ph);
 int		is_will_run(t_philo *ph);
 
 // SLEEP
-void	let_sleep (int sleep_time, t_data *data);
+void	let_sleep(int sleep_time, t_data *data);
 
 #endif
