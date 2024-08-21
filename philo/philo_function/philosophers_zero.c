@@ -72,12 +72,6 @@ t_philo	*new_philo(t_data *data)
 		philo[i].data = data;
 		philo[i].last_eat = data->start_time;
 		philo[i].thread = (pthread_t *)malloc(sizeof(pthread_t));
-		// if (!philo[i].thread)
-		// {
-		// 	printf("Error philo alloc\n");
-		// 	destroy_philo (philo);
-		// 	return (NULL);
-		// }
 		philo[i].l_fork.fork = data->fork[i].fork;
 		if (i < lim - 1)
 			philo[i].r_fork.fork = data->fork[i + 1].fork;
