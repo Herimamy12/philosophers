@@ -21,10 +21,10 @@ int	false_param(t_param *param)
 		ret = 1;
 	if (!param->time_to_sleep || !param->nbr_of_time_must_eat)
 		ret = 1;
-	if (!param->philo_nbr || param->philo_nbr > 200)
+	if (!param->philo_nbr)
 		ret = 1;
 	if (ret)
-		printf("Value of parameter 0 or philo more than 200\n");
+		printf("Value of one or more parameter 0\n");
 	return (ret);
 }
 
@@ -72,12 +72,12 @@ t_philo	*new_philo(t_data *data)
 		philo[i].data = data;
 		philo[i].last_eat = data->start_time;
 		philo[i].thread = (pthread_t *)malloc(sizeof(pthread_t));
-		if (!philo[i].thread)
-		{
-			printf("Error philo alloc\n");
-			destroy_philo (philo);
-			return (NULL);
-		}
+		// if (!philo[i].thread)
+		// {
+		// 	printf("Error philo alloc\n");
+		// 	destroy_philo (philo);
+		// 	return (NULL);
+		// }
 		philo[i].l_fork.fork = data->fork[i].fork;
 		if (i < lim - 1)
 			philo[i].r_fork.fork = data->fork[i + 1].fork;
@@ -140,5 +140,6 @@ t_data	*new_data(int ac, char **av)
 	data->fork = fork;
 	philo = new_philo (data);
 	data->philo = philo;
+	pthread_mutex_init (&data->stop, NULL);
 	return (data);
 }

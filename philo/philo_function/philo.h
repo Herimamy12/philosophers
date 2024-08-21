@@ -77,6 +77,7 @@ void	destroy_fork(t_fork *fork, int lim);
 void	run_routine(t_data *data);
 // 
 void	take_a_fork(t_philo *ph);
+void	drop_fork(t_philo *ph);
 void	is_eating(t_philo *ph);
 void	is_sleeping(t_philo *ph);
 void	is_thinking(t_philo *ph);

@@ -12,9 +12,30 @@
 
 #include "philo.h"
 
-void	print_action(char *action, t_philo *ph)
+void	one_philo(t_philo *ph)
 {
-	printf("%lld %d %s\n", get_time () - ph->data->start_time, ph->id, action);
+	print_action ("has taken a fork", ph);
+	let_sleep (ph->data->param->time_to_die, ph->data);
+	print_action ("dead", ph);
+}
+
+void	is_eating(t_philo *ph)
+{
+	take_a_fork (ph);
+	if (!is_will_run (ph))
+	{
+		drop_fork (ph);
+		return ;
+	}
+	print_action ("has taken a fork", ph);
+	print_action ("has taken a fork", ph);
+	print_action ("is eating", ph);
+	pthread_mutex_lock (&ph->data->stop);
+	ph->last_eat = get_time ();
+	ph->nbr_eat++;
+	pthread_mutex_unlock (&ph->data->stop);
+	let_sleep (ph->data->param->time_to_eat, ph->data);
+	drop_fork (ph);
 }
 
 void	*start_routine(void *philo)
@@ -22,6 +43,11 @@ void	*start_routine(void *philo)
 	t_philo	*ph;
 
 	ph = (t_philo *)philo;
+	if (ph->data->param->philo_nbr == 1)
+	{
+		one_philo (ph);
+		pthread_exit("succes");
+	}
 	if (ph->id % 2 != 0)
 		is_thinking (ph);
 	while (1)
