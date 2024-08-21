@@ -14,14 +14,9 @@
 
 void	print_action(char *action, t_philo *ph)
 {
-	// pthread_mutex_lock (&ph->data->stop);
 	if (ph->data->dead)
-	{
-		pthread_mutex_unlock (&ph->data->stop);
 		return ;
-	}
 	printf("%lld %d %s\n", get_time () - ph->data->start_time, ph->id, action);
-	// pthread_mutex_unlock (&ph->data->stop);
 }
 
 void	print_param(t_param *param)

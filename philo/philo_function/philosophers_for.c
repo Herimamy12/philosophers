@@ -43,6 +43,26 @@ void	let_sleep(int sleep_time, t_data *data)
 			break ;
 		}
 		pthread_mutex_unlock (&data->stop);
-		usleep (100);
+		usleep (10);
+	}
+}
+
+void	let_think(int sleep_time, t_data *data)
+{
+	int	time;
+
+	time = get_time ();
+	while (sleep_time > 10)
+		sleep_time /= 10;
+	while (get_time() - time < sleep_time)
+	{
+		pthread_mutex_lock (&data->stop);
+		if (data->dead)
+		{
+			pthread_mutex_unlock (&data->stop);
+			break ;
+		}
+		pthread_mutex_unlock (&data->stop);
+		usleep (5);
 	}
 }

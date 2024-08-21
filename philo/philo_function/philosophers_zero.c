@@ -49,8 +49,8 @@ t_param	*new_param(int ac, char **av)
 	}
 	param->time_to_think = ft_atoi (av[2]) - ft_atoi (av[3])
 		- ft_atoi (av[4]);
-	if (param->time_to_think < 0)
-		param->time_to_think = 0;
+	if (param->time_to_think < 1)
+		param->time_to_think = 1;
 	return (param);
 }
 

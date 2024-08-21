@@ -71,9 +71,7 @@ void	is_thinking(t_philo *ph)
 	}
 	print_action ("is thinking", ph);
 	pthread_mutex_unlock (&ph->data->stop);
-	if (ph->data->param->time_to_think == 0)
-		usleep (5);
-	usleep (ph->data->param->time_to_think);
+	let_think (ph->data->param->time_to_think, ph->data);
 }
 
 int	is_dead(t_philo *ph)
