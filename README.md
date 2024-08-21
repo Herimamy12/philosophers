@@ -1,2 +1,4 @@
-# Philosophers
-Philosophers
+-	0	:	new_param	-> time to think
+-	3	:	is_thinking	-> usleep to let_sleep
+-	4	:	let_sleep		-> usleep(100) to usleep(10)
+-	AllP	:	print_action	-> pthread_mutex_unlock à supprimer
