@@ -22,15 +22,16 @@ void	one_philo(t_philo *ph)
 void	is_eating(t_philo *ph)
 {
 	take_a_fork (ph);
+	pthread_mutex_lock (&ph->data->stop);
 	if (!is_will_run (ph))
 	{
 		drop_fork (ph);
+		pthread_mutex_unlock (&ph->data->stop);
 		return ;
 	}
 	print_action ("has taken a fork", ph);
 	print_action ("has taken a fork", ph);
 	print_action ("is eating", ph);
-	pthread_mutex_lock (&ph->data->stop);
 	ph->last_eat = get_time ();
 	ph->nbr_eat++;
 	pthread_mutex_unlock (&ph->data->stop);
