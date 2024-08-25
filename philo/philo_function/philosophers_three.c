@@ -58,7 +58,7 @@ void	is_sleeping(t_philo *ph)
 	}
 	print_action ("is sleeping", ph);
 	pthread_mutex_unlock (&ph->data->stop);
-	let_sleep (ph->data->param->time_to_sleep, ph->data);
+	let_sleep (ph->data->param->time_to_sleep, ph);
 }
 
 void	is_thinking(t_philo *ph)
@@ -71,14 +71,17 @@ void	is_thinking(t_philo *ph)
 	}
 	print_action ("is thinking", ph);
 	pthread_mutex_unlock (&ph->data->stop);
-	let_think (ph->data->param->time_to_think, ph->data);
+	let_think (ph->data->param->time_to_think, ph);
 }
 
 int	is_dead(t_philo *ph)
 {
+	long long	time;
+
+	time = get_time ();
 	if (ph->data->dead)
 		return (1);
-	if ((get_time () - ph->last_eat) >= (ph->data->param->time_to_die))
+	if ((time - ph->last_eat) > (long long)(ph->data->param->time_to_die))
 	{
 		print_action ("dead", ph);
 		ph->data->dead = 1;

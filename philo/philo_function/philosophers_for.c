@@ -29,40 +29,40 @@ int	is_will_run(t_philo *ph)
 	return (1);
 }
 
-void	let_sleep(int sleep_time, t_data *data)
+void	let_sleep(long sleep_time, t_philo *ph)
 {
-	int	time;
+	long long	time;
 
 	time = get_time ();
 	while (get_time() - time < sleep_time)
 	{
-		pthread_mutex_lock (&data->stop);
-		if (data->dead)
+		pthread_mutex_lock (&ph->data->stop);
+		if (ph->data->dead || !is_will_run (ph))
 		{
-			pthread_mutex_unlock (&data->stop);
+			pthread_mutex_unlock (&ph->data->stop);
 			break ;
 		}
-		pthread_mutex_unlock (&data->stop);
+		pthread_mutex_unlock (&ph->data->stop);
 		usleep (10);
 	}
 }
 
-void	let_think(int sleep_time, t_data *data)
+void	let_think(long sleep_time, t_philo *ph)
 {
-	int	time;
+	long long	time;
 
 	time = get_time ();
 	while (sleep_time > 10)
 		sleep_time /= 10;
 	while (get_time() - time < sleep_time)
 	{
-		pthread_mutex_lock (&data->stop);
-		if (data->dead)
+		pthread_mutex_lock (&ph->data->stop);
+		if (ph->data->dead || !is_will_run (ph))
 		{
-			pthread_mutex_unlock (&data->stop);
+			pthread_mutex_unlock (&ph->data->stop);
 			break ;
 		}
-		pthread_mutex_unlock (&data->stop);
+		pthread_mutex_unlock (&ph->data->stop);
 		usleep (5);
 	}
 }

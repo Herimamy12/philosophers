@@ -14,8 +14,9 @@
 
 void	one_philo(t_philo *ph)
 {
+	print_action ("is thinking", ph);
 	print_action ("has taken a fork", ph);
-	let_sleep (ph->data->param->time_to_die, ph->data);
+	let_sleep (ph->data->param->time_to_die, ph);
 	print_action ("dead", ph);
 }
 
@@ -35,7 +36,7 @@ void	is_eating(t_philo *ph)
 	ph->last_eat = get_time ();
 	ph->nbr_eat++;
 	pthread_mutex_unlock (&ph->data->stop);
-	let_sleep (ph->data->param->time_to_eat, ph->data);
+	let_sleep (ph->data->param->time_to_eat, ph);
 	drop_fork (ph);
 }
 

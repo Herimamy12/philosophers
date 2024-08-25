@@ -38,11 +38,11 @@ int	ft_is_digit(char set)
 	return ('0' <= set && set <= '9');
 }
 
-int	ft_atoi(char *str)
+long	ft_atoi(char *str)
 {
-	int	res;
-	int	sign;
-	int	index;
+	long	res;
+	int		sign;
+	int		index;
 
 	res = 0;
 	sign = 1;

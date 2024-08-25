@@ -24,12 +24,12 @@ void	print_param(t_param *param)
 	if (!param)
 		return ;
 	printf("=\t==\t==\t=\n");
-	printf("nbr philo = %d\n", param->philo_nbr);
-	printf("time to die = %d\n", param->time_to_die);
-	printf("time to eat = %d\n", param->time_to_eat);
-	printf("time to sleep = %d\n", param->time_to_sleep);
-	printf("time to think = %d\n", param->time_to_think);
-	printf("nbr of time must eat = %d\n", param->nbr_of_time_must_eat);
+	printf("nbr philo = %ld\n", param->philo_nbr);
+	printf("time to die = %ld\n", param->time_to_die);
+	printf("time to eat = %ld\n", param->time_to_eat);
+	printf("time to sleep = %ld\n", param->time_to_sleep);
+	printf("time to think = %ld\n", param->time_to_think);
+	printf("nbr of time must eat = %ld\n", param->nbr_of_time_must_eat);
 	printf("=\t==\t==\t=\n");
 }
 

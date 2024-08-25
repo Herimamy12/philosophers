@@ -70,7 +70,7 @@ t_philo	*new_philo(t_data *data)
 		philo[i].id = i + 1;
 		philo[i].nbr_eat = 0;
 		philo[i].data = data;
-		philo[i].last_eat = data->start_time;
+		philo[i].last_eat = get_time ();
 		philo[i].thread = (pthread_t *)malloc(sizeof(pthread_t));
 		philo[i].l_fork.fork = data->fork[i].fork;
 		if (i < lim - 1)
@@ -93,6 +93,7 @@ t_fork	*new_fork(t_param *param)
 		return (NULL);
 	while (i < param->philo_nbr)
 	{
+		fork[i].value = 0;
 		fork[i].fork = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
 		if (!fork[i].fork)
 		{

@@ -43,15 +43,17 @@ fclean : clean
 re : fclean all
 	clear
 
-test : re
+test : all
 	clear
-	./$(NAME) 5 6 9 8 7
+	./$(NAME) 5 800 200 200
 
 val : re
 	clear
-	valgrind -s --tool=helgrind ./$(NAME) 5 6 9 8 7
+	valgrind -s  ./$(NAME) 5 800 200 200 3
 
 .PHONY : all clean fclean re
 
-
+hel: all
+	clear
+	valgrind --tool=helgrind -s ./philo 5 800 200 200 3
 #--leak-check=full 

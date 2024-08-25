@@ -17,17 +17,18 @@
 
 typedef struct s_param
 {
-	int	philo_nbr;
-	int	time_to_die;
-	int	time_to_eat;
-	int	time_to_sleep;
-	int	time_to_think;
-	int	nbr_of_time_must_eat;
+	long	philo_nbr;
+	long	time_to_die;
+	long	time_to_eat;
+	long	time_to_sleep;
+	long	time_to_think;
+	long	nbr_of_time_must_eat;
 }		t_param;
 
 typedef struct s_fork
 {
 	pthread_mutex_t	*fork;
+	int				value;
 }					t_fork;
 
 typedef struct s_philo
@@ -52,7 +53,7 @@ typedef struct s_data
 }					t_data;
 
 // TIME
-int		get_time(void);
+long long	get_time(void);
 
 //	PARAM
 t_param	*new_param(int ac, char **av);
@@ -92,7 +93,7 @@ int		is_dead(t_philo *ph);
 int		is_will_run(t_philo *ph);
 
 // SLEEP
-void	let_sleep(int sleep_time, t_data *data);
-void	let_think(int sleep_time, t_data *data);
+void	let_sleep(long sleep_time, t_philo *ph);
+void	let_think(long sleep_time, t_philo *ph);
 
 #endif

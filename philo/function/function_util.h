@@ -19,6 +19,6 @@ int		ft_strlen(char *str);
 int		ft_is_space(char set);
 void	ft_shift_space(char *str, int *index);
 int		ft_is_digit(char set);
-int		ft_atoi(char *str);
+long	ft_atoi(char *str);
 
 #endif
