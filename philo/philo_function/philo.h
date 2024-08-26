@@ -28,13 +28,13 @@ typedef struct s_param
 typedef struct s_fork
 {
 	pthread_mutex_t	*fork;
-	int				value;
 }					t_fork;
 
 typedef struct s_philo
 {
 	int				id;
 	int				nbr_eat;
+	int				eat_state;
 	pthread_t		*thread;
 	struct s_data	*data;
 	t_fork			l_fork;
@@ -56,44 +56,45 @@ typedef struct s_data
 long long	get_time(void);
 
 //	PARAM
-t_param	*new_param(int ac, char **av);
-void	print_param(t_param *param);
-void	destroy_param(t_param *param);
-int		false_param(t_param *param);
+t_param		*new_param(int ac, char **av);
+void		print_param(t_param *param);
+void		destroy_param(t_param *param);
+int			false_param(t_param *param);
 
 // DATA
-t_data	*new_data(int ac, char **av);
-void	print_data(t_data *data);
-void	destroy_data(t_data *data);
+t_data		*new_data(int ac, char **av);
+void		print_data(t_data *data);
+void		destroy_data(t_data *data);
 
 // PHILO
-t_philo	*new_philo(t_data *data);
-void	print_philo(t_philo *philo);
-void	destroy_philo(t_philo *philo);
-void	one_philo(t_philo *ph);
+t_philo		*new_philo(t_data *data);
+void		print_philo(t_philo *philo);
+void		destroy_philo(t_philo *philo);
+void		one_philo(t_philo *ph);
 
 // FORK
-t_fork	*new_fork(t_param *param);
-void	destroy_fork(t_fork *fork, int lim);
-void	take_a_fork(t_philo *ph);
-void	drop_fork(t_philo *ph);
+t_fork		*new_fork(t_param *param);
+void		destroy_fork(t_fork *fork, int lim);
+void		take_a_fork(t_philo *ph);
+void		drop_fork(t_philo *ph);
 
 // ROUTINE
-void	run_routine(t_data *data);
-void	*start_routine(void *philo);
+void		run_routine(t_data *data);
+void		*start_routine(void *philo);
 // 
-void	is_eating(t_philo *ph);
-void	is_sleeping(t_philo *ph);
-void	is_thinking(t_philo *ph);
-void	print_action(char *action, t_philo *ph);
+void		is_eating(t_philo *ph);
+void		is_sleeping(t_philo *ph);
+void		is_thinking(t_philo *ph);
+void		print_action(char *action, t_philo *ph);
 
 // CONDITION
-int		is_full(t_philo *ph);
-int		is_dead(t_philo *ph);
-int		is_will_run(t_philo *ph);
+int			is_full(t_philo *ph);
+int			is_dead(t_philo *ph);
+int			is_will_run(t_philo *ph);
+int			next_is_eating(t_philo *ph);
 
 // SLEEP
-void	let_sleep(long sleep_time, t_philo *ph);
-void	let_think(long sleep_time, t_philo *ph);
+void		let_sleep(long sleep_time, t_philo *ph);
+void		let_think(long sleep_time, t_philo *ph);
 
 #endif

@@ -12,6 +12,32 @@
 
 #include "philo.h"
 
+int	next_is_eating(t_philo *ph)
+{
+	int	index;
+
+	index = ph->id;
+	pthread_mutex_lock (&ph->data->stop);
+	if (index == ph->data->param->philo_nbr)
+	{
+		if (ph->data->philo[0].eat_state)
+		{
+			pthread_mutex_unlock (&ph->data->stop);
+			return (index);
+		}
+	}
+	else
+	{
+		if (ph->data->philo[index].eat_state)
+		{
+			pthread_mutex_unlock (&ph->data->stop);
+			return (index);
+		}
+	}
+	pthread_mutex_unlock (&ph->data->stop);
+	return (0);
+}
+
 void	one_philo(t_philo *ph)
 {
 	print_action ("is thinking", ph);
@@ -34,10 +60,14 @@ void	is_eating(t_philo *ph)
 	print_action ("has taken a fork", ph);
 	print_action ("is eating", ph);
 	ph->last_eat = get_time ();
+	ph->eat_state = 1;
 	ph->nbr_eat++;
 	pthread_mutex_unlock (&ph->data->stop);
 	let_sleep (ph->data->param->time_to_eat, ph);
 	drop_fork (ph);
+	pthread_mutex_lock (&ph->data->stop);
+	ph->eat_state = 0;
+	pthread_mutex_unlock (&ph->data->stop);
 }
 
 void	*start_routine(void *philo)

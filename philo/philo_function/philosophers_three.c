@@ -14,6 +14,17 @@
 
 void	take_a_fork(t_philo *ph)
 {
+	while (next_is_eating (ph))
+	{
+		pthread_mutex_lock (&ph->data->stop);
+		if (!is_will_run (ph))
+		{
+			pthread_mutex_unlock (&ph->data->stop);
+			break ;
+		}
+		pthread_mutex_unlock (&ph->data->stop);
+		usleep (10);
+	}
 	if (ph->l_fork.fork < ph->r_fork.fork)
 	{
 		if (pthread_mutex_lock (ph->l_fork.fork) != 0)
